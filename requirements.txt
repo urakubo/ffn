@@ -7,6 +7,9 @@ h5py>=2.7.0
 numpy>=1.11.1
 scikit-image>=0.11.0
 scipy>=0.15.1
-tensorflow>=1.4.0
-tensorstore>=0.1.40
+tensorflow==2.18.0
+tensorstore
+ml-dtypes>=0.5.0
 tf-slim>=1.1.0
+image-augmentation
+gin-config

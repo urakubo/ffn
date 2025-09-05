@@ -41,6 +41,7 @@ import h5py
 import numpy as np
 from scipy import special
 import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
 from tensorflow.io import gfile
 
 
@@ -216,8 +217,8 @@ def define_data_input(model, queue_batch=None):
     queue_batch = FLAGS.batch_size
 
   # Fetch sizes of images and labels
-  label_size = train_labels_size(model)
-  image_size = train_image_size(model)
+  label_size = train_labels_size(model.info)
+  image_size = train_image_size(model.info)
 
   label_radii = (label_size // 2).tolist()
   label_size = label_size.tolist()

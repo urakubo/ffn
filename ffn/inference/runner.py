@@ -518,6 +518,8 @@ class Runner:
 
     if gfile.exists(cpoint_path):
       partial_segment_iters = canvas.restore_checkpoint(cpoint_path)
+    else:
+      partial_segment_iters = 0
 
     if self.request.alignment_options.save_raw:
       image_path = storage.subvolume_path(

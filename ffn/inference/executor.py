@@ -36,6 +36,7 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 import tensorflow.compat.v1 as tf
+tf.compat.v1.disable_v2_behavior()
 
 from ..training import model as ffn_model
 from . import inference_utils

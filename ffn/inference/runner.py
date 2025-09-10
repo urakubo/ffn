@@ -478,9 +478,10 @@ class Runner:
     # Save probability map separately. This has to happen after the
     # segmentation is saved, as `save_subvolume` will create any necessary
     # directories.
-    prob = unalign_image(canvas.seg_prob)
-    with storage.atomic_file(prob_path) as fd:
-      np.savez_compressed(fd, qprob=prob)
+    if canvas.seg_prob is not None:
+      prob = unalign_image(canvas.seg_prob)
+      with storage.atomic_file(prob_path) as fd:
+        np.savez_compressed(fd, qprob=prob)
 
   def run(self, corner: Tuple3i, subvol_size: Tuple3i, reset_counters=True):
     """Runs FFN inference over a subvolume.

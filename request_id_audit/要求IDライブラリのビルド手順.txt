@@ -1,0 +1,19 @@
+FFN の要求 ID 修正ライブラリをビルドする
+
+Ubuntu 上で、FFN の作業ディレクトリ（repo/ がある場所）から実行します。
+初回セットアップなどで libffn_id_audit.so がない場合や、request_id_hook.cc を更新した場合にビルドします。C++17 対応の g++ が必要です。
+
+    g++ -std=c++17 -O2 -shared -fPIC -pthread \
+      repo/request_id_audit/request_id_hook.cc \
+      -ldl \
+      -o repo/request_id_audit/libffn_id_audit.so
+
+ビルド後、共有ライブラリと補助ファイルを確認します。
+
+    ls -l repo/request_id_audit/{libffn_id_audit.so,resolve_provider.py}
+
+共通 JSON の environment で参照先を指定できます。
+
+    "FFN_IDFIX_ASSET_DIR": "repo/request_id_audit"
+
+この設定で、PS と各 worker を distributed_train_idfixed.py から起動します。

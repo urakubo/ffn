@@ -1,0 +1,126 @@
+{
+  "options": {
+    "ps_hosts": [
+      "127.0.0.1:2222"
+    ],
+    "worker_hosts": [
+      "127.0.0.1:2223",
+      "127.0.0.1:2224",
+      "127.0.0.1:2225",
+      "127.0.0.1:2226"
+    ],
+    "train_coords": "preprocessed_ground_truth2/tf_record_file*",
+    "data_volumes": "v:preprocessed_ground_truth2/grayscale_maps_v.h5:raw,2:preprocessed_ground_truth2/grayscale_maps_v2.h5:raw,v3:preprocessed_ground_truth2/grayscale_maps_v3.h5:raw",
+    "label_volumes": "v:preprocessed_ground_truth2/groundtruth_v.h5:stack,2:preprocessed_ground_truth2/groundtruth_v2.h5:stack,v3:preprocessed_ground_truth2/groundtruth_v3.h5:stack",
+    "model_name": "convstack_3d.ConvStack3DFFNModel",
+    "model_args": {
+      "depth": 9,
+      "fov_size": [
+        33,
+        33,
+        17
+      ],
+      "deltas": [
+        8,
+        8,
+        4
+      ]
+    },
+    "image_mean": 125,
+    "image_stddev": 74,
+    "train_dir": "trained_models_ground_truth2",
+    "max_steps": 200000000,
+    "batch_size": 4,
+    "optimizer": "sgd",
+    "learning_rate": 0.001,
+    "replica_step_delay": 300
+  },
+  "environment": {
+    "CUDA_DEVICE_ORDER": "PCI_BUS_ID",
+    "TF_FORCE_GPU_ALLOW_GROWTH": "true",
+    "FFN_IDFIX_ASSET_DIR": "repo",
+    "FFN_IDFIX_LOG_ROOT": "ffn-idfixed-logs"
+  },
+  "processes": {
+    "server": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": ""
+      }
+    },
+    "worker0": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      }
+    },
+    "worker1": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "1"
+      }
+    },
+    "worker2": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "2"
+      }
+    },
+    "worker3": {
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "3"
+      }
+    }
+  },
+  "preparation": {
+    "repo_dir": "repo",
+    "compute_partitions": {
+      "thresholds": [
+        0.025,
+        0.05,
+        0.075,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "lom_radius": [
+        24,
+        24,
+        12
+      ],
+      "min_size": 10000
+    },
+    "build_coordinates": {
+      "margin": [
+        24,
+        24,
+        12
+      ]
+    },
+    "volumes": {
+      "v": {
+        "em_glob": "../ground_truth/em/*",
+        "seg_glob": "../ground_truth/seg250913_no_myelin/*",
+        "partition_volume": "preprocessed_ground_truth2/af_v.h5:af",
+        "coordinate_output": "preprocessed_ground_truth2/tf_record_file_v"
+      },
+      "2": {
+        "em_glob": "../ground_truth/em_soma_nucleus2/*",
+        "seg_glob": "../ground_truth/soma_nucleus2/*",
+        "partition_volume": "preprocessed_ground_truth2/af_v2.h5:af",
+        "coordinate_output": "preprocessed_ground_truth2/tf_record_file_v2"
+      },
+      "v3": {
+        "em_glob": "../ground_truth/em_soma_nucleus3/*",
+        "seg_glob": "../ground_truth/soma_nucleus3/*",
+        "partition_volume": "preprocessed_ground_truth2/af_v3.h5:af",
+        "coordinate_output": "preprocessed_ground_truth2/tf_record_file_v3"
+      }
+    }
+  },
+  "single_gpu": {
+    "gpu": "0"
+  }
+}

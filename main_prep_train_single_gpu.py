@@ -55,6 +55,11 @@ def write_hdf5(pattern, destination, dataset, labels, overwrite):
     Path(destination).parent.mkdir(parents=True, exist_ok=True)
     with h5py.File(destination, 'w' if overwrite else 'x') as output:
         output.create_dataset(dataset, data=volume, compression='gzip')
+    if not labels:
+        mean = volume.mean(dtype=np.float64)
+        stddev = volume.std(dtype=np.float64)
+        print(f'EM intensity {destination}:{dataset} '
+              f'image_mean={mean:.6f} image_stddev={stddev:.6f}', flush=True)
 
 
 def main():

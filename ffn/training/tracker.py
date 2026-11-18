@@ -234,7 +234,7 @@ class EvalTracker:
 
     try:
 
-      # font = PIL.ImageFont.load_default()
+      font = PIL.ImageFont.load_default()
     except (IOError, ValueError):
       font = PIL.ImageFont.load_default()
 

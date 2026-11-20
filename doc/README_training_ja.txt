@@ -1,8 +1,8 @@
 共通 JSON 版
 
 FFN 作業ディレクトリで実行してください。相対パスは実行時の作業ディレクトリ基準です。
-main_prep_train.py と ffn_shared_config_4gpu.json（または 2gpu）を作業ディレクトリへ、
-distributed_train_idfixed.py を repo/ へ置きます。分散版の .so と resolve_provider.py は従来どおりです。
+repo/configs/ffn_shared_config_4gpu.json（または 2gpu）を作業ディレクトリへ、
+main_prep_train.py と main_distributed_train.py を repo/ へ置きます。
 
 同じ JSON を両方のプログラムに指定します。
   options: 学習データ、モデル、正規化、保存先などの共通設定と PS/worker のアドレス。
@@ -15,8 +15,8 @@ distributed_train_idfixed.py を repo/ へ置きます。分散版の .so と re
 旧分散 JSON と直接指定の CLI も利用できます。
 
 まず確認（ファイル生成やトレーニングは行いません）:
-  python main_prep_train.py --config ffn_shared_config_4gpu.json --stage all --dry-run
-  python repo/distributed_train_idfixed.py --config ffn_shared_config_4gpu.json --role worker0 --dry-run
+  python repo/main_prep_train.py --config ffn_shared_config_4gpu.json --stage all --dry-run
+  python repo/main_distributed_train.py --config ffn_shared_config_4gpu.json --role worker0 --dry-run
 
 使う段階を選択:
   --stage hdf5                 HDF5 生成のみ
